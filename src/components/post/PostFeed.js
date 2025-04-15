@@ -118,7 +118,7 @@ const PostFeed = () => {
         } catch (error) {
             console.error("❌ Error fetching posts with likes:", error.message);
         }
-    }, [posts]);
+    }, [posts, fetchLikes]);
 
     // Toggle like/unlike functionality for a post
     const toggleLike = async (postId) => {

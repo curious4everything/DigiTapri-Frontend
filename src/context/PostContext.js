@@ -89,7 +89,7 @@ export const PostProvider = ({ children }) => {
         } catch (error) {
             console.error("Error accessing localStorage:", error);
         }
-    }, [fetchPosts]); // Add `fetchPosts` as a dependency
+    }, [fetchPosts, CACHE_EXPIRATION]); // Add `fetchPosts` as a dependency
 
     // Clear the cache
     const clearCache = useCallback(() => {

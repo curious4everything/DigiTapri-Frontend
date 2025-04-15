@@ -1,6 +1,5 @@
 // src/components/Home.js
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/authService';
 import { Table } from 'react-bootstrap';
 
