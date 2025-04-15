@@ -2,7 +2,6 @@
 import axiosInstance from './axiosInstance';
 import {jwtDecode} from 'jwt-decode';
 
-const API_URL = 'http://localhost:5000/api';
 
 export const register = async (userData) => {
   try {
