@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
-import axios from "axios";
+import axiosInstance from "../services/axiosInstance";
 
 const PostContext = createContext();
 
@@ -7,17 +7,13 @@ export const usePosts = () => useContext(PostContext);
 
 export const PostProvider = ({ children }) => {
     const [posts, setPosts] = useState([]);
-    const token = localStorage.getItem("token");
-
     const CACHE_KEY = "postFeedCache_v1"; // Ensure unique cache key
     const CACHE_EXPIRATION = 10 * 60 * 1000; // 10 minutes in milliseconds
 
     // Fetch posts from the API
     const fetchPosts = useCallback(async () => {
         try {
-            const response = await axios.get("http://localhost:5000/api/posts/feed", {
-                headers: { Authorization: `Bearer ${token}` },
-            });
+            const response = await axiosInstance.get("/posts/feed");
 
             console.log("Fetched Posts from API:", response.data);
 
@@ -32,14 +28,12 @@ export const PostProvider = ({ children }) => {
         } catch (error) {
             console.error("Error fetching posts:", error);
         }
-    }, [token]); // Add `token` as a dependency
+    }, []); // No need for `token` dependency as axiosInstance handles the token
 
     // Add a new post
     const addPost = async (postData) => {
         try {
-            const response = await axios.post("http://localhost:5000/api/posts", postData, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
+            const response = await axiosInstance.post("/posts", postData);
 
             const newPost = response.data;
 
@@ -105,7 +99,7 @@ export const PostProvider = ({ children }) => {
 
     return (
         <PostContext.Provider value={{ posts, fetchPosts, addPost, clearCache }}>
-            {children}
-        </PostContext.Provider>
+        {children}
+    </PostContext.Provider>
     );
 };

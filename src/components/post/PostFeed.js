@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { usePosts } from "../../context/PostContext";
 import {jwtDecode} from "jwt-decode"; // Correct import
-import axios from "axios"; // For API calls
+import axiosInstance from "../../services/axiosInstance"; // Use axiosInstance
 import { FaHeart } from "react-icons/fa";
 
 const ZoomedImageModal = ({ image, onClose }) => {
@@ -73,11 +73,7 @@ const PostFeed = () => {
     const fetchLikes = useCallback(
         async (postId) => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/likes/post/${postId}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                const response = await axiosInstance.get(`/likes/post/${postId}`);
 
                 // Find the like entry for the logged-in user
                 const userLike = response.data.find((like) => like.user._id === loggedInUserId);
@@ -91,7 +87,7 @@ const PostFeed = () => {
                 return { likeCount: 0, userLikeId: null };
             }
         },
-        [token, loggedInUserId] // Dependencies for fetchLikes
+        [loggedInUserId] // Dependencies for fetchLikes
     );
 
     // Fetch all posts and include their like counts
@@ -130,11 +126,7 @@ const PostFeed = () => {
 
             if (userLikeId) {
                 // Unlike the post
-                await axios.delete(`http://localhost:5000/api/likes/post/${postId}/like/${userLikeId}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                await axiosInstance.delete(`/likes/post/${postId}/like/${userLikeId}`);
                 setLikes((prevLikes) => ({
                     ...prevLikes,
                     [postId]: prevLikes[postId] - 1,
@@ -146,15 +138,7 @@ const PostFeed = () => {
                 });
             } else {
                 // Like the post
-                const response = await axios.post(
-                    "http://localhost:5000/api/likes",
-                    { post: postId },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
+                const response = await axiosInstance.post("/likes", { post: postId });
                 setLikes((prevLikes) => ({
                     ...prevLikes,
                     [postId]: (prevLikes[postId] || 0) + 1,
