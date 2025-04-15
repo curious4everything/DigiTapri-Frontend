@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 const PostContext = createContext();
@@ -13,7 +13,7 @@ export const PostProvider = ({ children }) => {
     const CACHE_EXPIRATION = 10 * 60 * 1000; // 10 minutes in milliseconds
 
     // Fetch posts from the API
-    const fetchPosts = async () => {
+    const fetchPosts = useCallback(async () => {
         try {
             const response = await axios.get("http://localhost:5000/api/posts/feed", {
                 headers: { Authorization: `Bearer ${token}` },
@@ -32,7 +32,7 @@ export const PostProvider = ({ children }) => {
         } catch (error) {
             console.error("Error fetching posts:", error);
         }
-    };
+    }, [token]); // Add `token` as a dependency
 
     // Add a new post
     const addPost = async (postData) => {
@@ -65,15 +65,8 @@ export const PostProvider = ({ children }) => {
         }
     };
 
-    // Clear the cache
-    const clearCache = () => {
-        console.log("🧹 Clearing cache...");
-        localStorage.removeItem(CACHE_KEY); // Remove the cached posts
-        setPosts([]); // Clear the posts state
-        console.log("✅ Cache cleared and posts state reset.");
-    };
-
-    const loadPosts = async () => {
+    // Load posts from cache or fetch from API
+    const loadPosts = useCallback(async () => {
         try {
             const cachedData = localStorage.getItem(CACHE_KEY);
 
@@ -96,11 +89,19 @@ export const PostProvider = ({ children }) => {
         } catch (error) {
             console.error("Error accessing localStorage:", error);
         }
-    };
+    }, [fetchPosts]); // Add `fetchPosts` as a dependency
+
+    // Clear the cache
+    const clearCache = useCallback(() => {
+        console.log("🧹 Clearing cache...");
+        localStorage.removeItem(CACHE_KEY); // Remove the cached posts
+        setPosts([]); // Clear the posts state
+        console.log("✅ Cache cleared and posts state reset.");
+    }, []);
 
     useEffect(() => {
         loadPosts();
-    }, []);
+    }, [loadPosts]); // Add `loadPosts` as a dependency
 
     return (
         <PostContext.Provider value={{ posts, fetchPosts, addPost, clearCache }}>

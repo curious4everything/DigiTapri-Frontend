@@ -25,7 +25,9 @@ export const login = async ({ usernameOrEmail, password }) => {
 
       if (!response.ok) {
           const errorData = await response.json();
-          throw { response: { data: errorData } }; // Modified this line.
+          const error = new Error('Login failed');
+          error.response = { data: errorData };
+          throw error; // Modified this line.
       }
 
       return response.json(); // Return the whole response

@@ -5,7 +5,6 @@ import { getUserProfile } from '../services/authService';
 import { Table } from 'react-bootstrap';
 
 function Home() {
-  const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [error, setError] = useState(null);
   const token = localStorage.getItem('token'); // Get token from local storage
@@ -26,16 +25,7 @@ function Home() {
     fetchProfile();
   }, [token]);
 
-  /*const handleLogout = async () => {
-    try {
-      await logout();
-      localStorage.removeItem('token');
-      navigate('/Login');
-    } catch (err) {
-      console.error('Logout failed:', err);
-      // Handle logout error (e.g., display error message)
-    }
-  };   */ // removed code for logout button
+  
   if (error) {
     return <div>Error: {error}</div>;
   }

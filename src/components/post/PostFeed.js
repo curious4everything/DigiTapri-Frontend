@@ -1,5 +1,5 @@
-//Postfeed.js
-import React, { useState, useEffect } from "react";
+//src/components/Postfeed.js
+import React, { useState, useEffect, useCallback } from "react";
 import { usePosts } from "../../context/PostContext";
 import {jwtDecode} from "jwt-decode"; // Correct import
 import axios from "axios"; // For API calls
@@ -92,7 +92,7 @@ const PostFeed = () => {
     };
 
     // Fetch all posts and include their like counts
-    const fetchPostsWithLikes = async () => {
+    const fetchPostsWithLikes = useCallback(async () => {
         try {
             const postsWithLikes = await Promise.all(
                 posts.map(async (post) => {
@@ -118,7 +118,7 @@ const PostFeed = () => {
         } catch (error) {
             console.error("❌ Error fetching posts with likes:", error.message);
         }
-    };
+    }, [posts]);
 
     // Toggle like/unlike functionality for a post
     const toggleLike = async (postId) => {
@@ -171,7 +171,7 @@ const PostFeed = () => {
         if (posts && posts.length > 0) {
             fetchPostsWithLikes();
         }
-    }, [posts]);
+    }, [posts, fetchPostsWithLikes]);
 
     console.log("Posts:", posts);
 
