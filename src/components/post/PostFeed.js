@@ -69,27 +69,30 @@ const PostFeed = () => {
     const token = localStorage.getItem("token");
     const loggedInUserId = token ? jwtDecode(token).userId : null;
 
-    // Fetch the number of likes for a specific post
-    const fetchLikes = async (postId) => {
-        try {
-            const response = await axios.get(`http://localhost:5000/api/likes/post/${postId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+    // Wrap fetchLikes in useCallback
+    const fetchLikes = useCallback(
+        async (postId) => {
+            try {
+                const response = await axios.get(`http://localhost:5000/api/likes/post/${postId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
 
-            // Find the like entry for the logged-in user
-            const userLike = response.data.find((like) => like.user._id === loggedInUserId);
+                // Find the like entry for the logged-in user
+                const userLike = response.data.find((like) => like.user._id === loggedInUserId);
 
-            return {
-                likeCount: response.data.length, // Total number of likes
-                userLikeId: userLike ? userLike._id : null, // The like ID for the logged-in user
-            };
-        } catch (error) {
-            console.error(`❌ Error fetching likes for post ${postId}:`, error.message);
-            return { likeCount: 0, userLikeId: null };
-        }
-    };
+                return {
+                    likeCount: response.data.length, // Total number of likes
+                    userLikeId: userLike ? userLike._id : null, // The like ID for the logged-in user
+                };
+            } catch (error) {
+                console.error(`❌ Error fetching likes for post ${postId}:`, error.message);
+                return { likeCount: 0, userLikeId: null };
+            }
+        },
+        [token, loggedInUserId] // Dependencies for fetchLikes
+    );
 
     // Fetch all posts and include their like counts
     const fetchPostsWithLikes = useCallback(async () => {
@@ -118,7 +121,7 @@ const PostFeed = () => {
         } catch (error) {
             console.error("❌ Error fetching posts with likes:", error.message);
         }
-    }, [posts, fetchLikes]);
+    }, [posts, fetchLikes]); // Add fetchLikes to the dependency array
 
     // Toggle like/unlike functionality for a post
     const toggleLike = async (postId) => {
