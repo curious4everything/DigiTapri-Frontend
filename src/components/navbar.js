@@ -44,25 +44,24 @@ function NavbarComponent() {
                                 Login
                             </Button>
                         )}
-                        {isHomePage && (
-                            <Button variant="outline-light" as={Link} to="/feed" className="mx-2">
-                                Feed
-                            </Button>
-                        )}
-                        {isFeedPage && (
-                            <Button variant="outline-light" as={Link} to="/" className="mx-2">
-                                Profile
-                            </Button>
-                        )}
-                        {isLoggedIn && (
+                        {isLoggedIn ? (
                             <>
-                                <Button variant="outline-light" as={Link} to="/feed" className="mx-2">
-                                    Feed
-                                </Button>
+                                {/* Render Feed button only once for logged-in users */}
+                                {!isFeedPage && (
+                                    <Button variant="outline-light" as={Link} to="/feed" className="mx-2">
+                                        Feed
+                                    </Button>
+                                )}
                                 <Button variant="outline-light" onClick={handleLogout} className="mx-2">
                                     Logout
                                 </Button>
                             </>
+                        ) : (
+                            isHomePage && (
+                                <Button variant="outline-light" as={Link} to="/feed" className="mx-2">
+                                    Feed
+                                </Button>
+                            )
                         )}
                     </Nav>
                 </BootstrapNavbar.Collapse>
