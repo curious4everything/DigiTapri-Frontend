@@ -29,7 +29,7 @@ function NavbarComponent() {
                 <BootstrapNavbar.Collapse id="navbar-nav">
                     <Nav className="ms-auto">
                         {/* Conditional rendering based on route */}
-                        {!isLoginPage && !isRegisterPage && !isLoggedIn && (
+                        {!isLoginPage && !isRegisterPage && !isLoggedIn &&(
                             <Button variant="outline-light" as={Link} to="/">
                                 Home
                             </Button>
@@ -50,6 +50,11 @@ function NavbarComponent() {
                                 {!isFeedPage && (
                                     <Button variant="outline-light" as={Link} to="/feed" className="mx-2">
                                         Feed
+                                    </Button>
+                                )}
+                                {!isHomePage && (
+                                    <Button variant="outline-light" as={Link} to="/" className="mx-2">
+                                        Home
                                     </Button>
                                 )}
                                 <Button variant="outline-light" onClick={handleLogout} className="mx-2">
