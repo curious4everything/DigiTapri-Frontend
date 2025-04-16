@@ -167,6 +167,21 @@ h2 {
   margin: 0 5px; /* Add spacing between buttons */
 }
 
+/* Base styles for the profile container */
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  width: 100%;
+  height: auto; /* Allow the container to grow naturally */
+}
+
+/* Wrapper for the profile table */
+.profile-table-wrapper {
+  width: 50%; /* Default width for larger screens */
+}
+
 /* Responsive layout for mobile and tablet devices */
 @media (max-width: 768px) {
   .feed-container {
@@ -207,6 +222,15 @@ h2 {
 
   .navbar {
     font-size: 0.9rem;
+  }
+
+  .profile-table-wrapper {
+    width: 90%; /* Increase width to fit smaller screens */
+  }
+
+  .profile-container {
+    margin-top: 50px; /* Reduce top margin for smaller screens */
+    padding: 10px; /* Add padding for better spacing */
   }
 }
 

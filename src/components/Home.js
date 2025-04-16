@@ -38,27 +38,27 @@ function Home() {
   }
 
   return (
-      <div className="d-flex justify-content-center align-items-center" style={{ marginTop: '100px', width: '100%' }}>
-    <div style={{ width: '50%' }}> {/* Adjust width as needed */}
-        <Table striped bordered hover className="w-100">
-            <thead>
-                <tr>
-                    <th colSpan="2" className="text-center">User Profile</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Username</td>
-                    <td>{profile.username}</td>
-                </tr>
-                <tr>
-                    <td>Email</td>
-                    <td>{profile.email}</td>
-                </tr>
-            </tbody>
-        </Table>
+    <div className="profile-container">
+        <div className="profile-table-wrapper">
+            <Table striped bordered hover className="w-100">
+                <thead>
+                    <tr>
+                        <th colSpan="2" className="text-center">User Profile</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Username</td>
+                        <td>{profile.username}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>{profile.email}</td>
+                    </tr>
+                </tbody>
+            </Table>
+        </div>
     </div>
-</div>
   );
 }
 
