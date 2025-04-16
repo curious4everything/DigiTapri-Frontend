@@ -6,6 +6,8 @@ const baseURL =
     ? process.env.REACT_APP_PROD_API_URL // Use production URL
     : process.env.REACT_APP_DEV_API_URL; // Use development URL
 
+console.log("Environment:", process.env.NODE_ENV);
+console.log("Production API URL:", process.env.REACT_APP_PROD_API_URL);
 console.log("Axios Base URL:", baseURL); // Debugging: Log the selected base URL
 
 const axiosInstance = axios.create({
