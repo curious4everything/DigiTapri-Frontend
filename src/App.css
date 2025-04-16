@@ -37,8 +37,6 @@
   }
 }
 
-
-
 /*Fading effect for scrollable content*/
 .scroll-container {
   height: 100%; /* Or a fixed height like 400px */
@@ -65,4 +63,168 @@
 .scroll-container::after {
   bottom: 0;
   background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+}
+
+/* Base styles for the feed container */
+.feed-container {
+  display: flex;
+  flex-direction: row; /* Default: side-by-side layout */
+  height: 150vh;
+  margin-top: 2rem;
+}
+
+/* Post creation section (left side) */
+.post-creation-section {
+  flex: 1;
+  border-right: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-y: auto; /* Scrollable only for desktop */
+}
+
+/* Post feed section (right side) */
+.post-feed-section {
+  flex: 2;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Header for the feed */
+.feed-header {
+  margin: auto;
+  padding: 10px;
+  border-bottom: 5px solid #ccc;
+}
+
+/* Scrollable container for the feed */
+.scroll-container {
+  flex: 1;
+  overflow-y: auto;
+  border: 5px solid #ccc;
+  padding: auto;
+  box-sizing: border-box;
+  position: relative; /* Required for pseudo-elements */
+}
+
+/* Container for the feed header and refresh button */
+.feed-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Refresh Posts button */
+.refresh-posts-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.refresh-posts-button:hover {
+  background-color: #0056b3;
+}
+
+/* Base font sizes */
+body {
+  font-size: 16px; /* Default font size for desktop */
+}
+
+h1 {
+  font-size: 2.5rem; /* Default heading size for desktop */
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+.navbar {
+  font-size: 1rem;
+}
+
+/* Base styles for the navbar */
+.custom-navbar {
+  font-size: clamp(12px, 2vw, 18px); /* Dynamically scale font size */
+  padding: clamp(10px, 2vw, 20px); /* Dynamically scale padding */
+}
+
+/* Navbar brand */
+.custom-navbar .navbar-brand {
+  font-size: clamp(16px, 3vw, 24px); /* Dynamically scale brand font size */
+}
+
+/* Navbar buttons */
+.custom-navbar .btn {
+  font-size: clamp(10px, 1.5vw, 16px); /* Dynamically scale button font size */
+  margin: 0 5px; /* Add spacing between buttons */
+}
+
+/* Responsive layout for mobile and tablet devices */
+@media (max-width: 768px) {
+  .feed-container {
+    flex-direction: column; /* Stack the sections vertically */
+    height: auto; /* Allow the container to grow naturally */
+  }
+
+  .post-creation-section {
+    flex: none; /* Reset flex properties */
+    border-right: none; /* Remove the right border */
+    border-bottom: 1px solid #ccc; /* Add a bottom border for separation */
+    overflow-y: visible; /* Ensure the post creation form is fully visible */
+  }
+
+  .post-feed-section {
+    flex: none; /* Reset flex properties */
+    height: auto; /* Allow the section to grow naturally */
+    margin-top: 1rem; /* Add spacing between the sections */
+  }
+
+  .scroll-container {
+    flex: none; /* Reset flex properties */
+    overflow-y: auto; /* Keep the feed scrollable */
+    height: 60vh; /* Limit the height of the feed to make it scrollable */
+  }
+
+  body {
+    font-size: 14px; /* Smaller font size for tablets */
+  }
+
+  h1 {
+    font-size: 2rem; /* Adjust heading size */
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  .navbar {
+    font-size: 0.9rem;
+  }
+}
+
+/* Adjust font sizes for mobile devices */
+@media (max-width: 480px) {
+  body {
+    font-size: 12px; /* Smaller font size for mobile */
+  }
+
+  h1 {
+    font-size: 1.75rem; /* Adjust heading size */
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .navbar {
+    font-size: 0.8rem;
+  }
 }

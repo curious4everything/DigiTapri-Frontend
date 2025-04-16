@@ -19,7 +19,7 @@ function NavbarComponent() {
     const isFeedPage = location.pathname === '/feed';
 
     return (
-        <BootstrapNavbar bg="dark" variant="dark" expand="lg">
+        <BootstrapNavbar bg="dark" variant="dark" expand="lg" className="custom-navbar">
             <Container>
                 <BootstrapNavbar.Brand as={Link} to="/">
                     Digi Tapri (Your Social media)

@@ -1,9 +1,8 @@
+import React from "react";
 import PostFeed from "../components/post/PostFeed";
 import PostCreationPage from "../components/post/postpg";
-import { PostProvider } from "../context/PostContext";
+import { PostProvider, usePosts } from "../context/PostContext";
 import "../App.css";
-import React from "react";
-
 
 /**
  * The `feed` component serves as the main page for displaying and creating posts.
@@ -12,41 +11,31 @@ import React from "react";
  * @component
  * @returns {JSX.Element} The feed page containing the post creation section and the post feed.
  */
-export default function feed(){
+export default function Feed() {
+    const { refreshPosts } = usePosts(); // Access the refreshPosts function from context
+
     return (
         <PostProvider>
-            <div className="container mt-5" style={{ display: "flex", flexDirection: "row", height: "150vh" }}>
-                <div style={{
-                    flex: 1,
-                    borderRight: "1px solid #ccc",
-                    padding: "10px",
-                    boxSizing: "border-box",
-                    overflowY: "auto"
-                }}>
+            <div className="feed-container">
+                <div className="post-creation-section">
                     <PostCreationPage />
                 </div>
-                <div style={{
-                    flex: 2,
-                    padding: "10px",
-                    boxSizing: "border-box",
-                    display: "flex",
-                    flexDirection: "column",
-                    height: "100%"
-                }}>
-                    <h2 style={{ margin: "auto", padding: "10px", borderBottom: "5px solid #ccc" }}>
-                        Your Feed
-                    </h2>
-                    <div
-                        className="scroll-container"
-                        style={{
-                            flex: 1,
-                            overflowY: "auto",
-                            border: "5px solid #ccc",
-                            padding: "auto",
-                            boxSizing: "border-box",
-                            position: "relative", // Required for pseudo-elements
-                        }}>
-                         <PostFeed />
+                <div className="post-feed-section">
+                    <div className="feed-header-container">
+                        <h2 className="feed-header">Your Feed</h2>
+                        <button
+                            className="refresh-posts-button"
+                            onClick={() => {
+                                refreshPosts(); // Refresh the posts
+                                window.location.reload(); // Reload the page
+                            }}
+                            
+                        >
+                            Refresh Posts
+                        </button>
+                    </div>
+                    <div className="scroll-container">
+                        <PostFeed />
                     </div>
                 </div>
             </div>

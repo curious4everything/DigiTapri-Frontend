@@ -1,7 +1,15 @@
 import axios from "axios";
 
+// Dynamically set the base URL based on the environment
+const baseURL =
+  process.env.NODE_ENV === "production"
+    ? process.env.REACT_APP_PROD_API_URL // Use production URL
+    : process.env.REACT_APP_DEV_API_URL; // Use development URL
+
+console.log("Axios Base URL:", baseURL); // Debugging: Log the selected base URL
+
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "https://digitapri-backend.onrender.com/api", // Use Render URL or fallback to localhost
+  baseURL: baseURL,
   headers: {
     "Content-Type": "application/json",
   },

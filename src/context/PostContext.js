@@ -59,6 +59,13 @@ export const PostProvider = ({ children }) => {
         }
     };
 
+    // Refresh posts by clearing the cache and fetching fresh data
+    const refreshPosts = useCallback(async () => {
+        console.log("🔄 Refreshing posts...");
+        localStorage.removeItem(CACHE_KEY); // Clear the cache
+        await fetchPosts(); // Fetch fresh posts
+    }, [fetchPosts]);
+
     // Load posts from cache or fetch from API
     const loadPosts = useCallback(async () => {
         try {
@@ -98,7 +105,7 @@ export const PostProvider = ({ children }) => {
     }, [loadPosts]); // Add `loadPosts` as a dependency
 
     return (
-        <PostContext.Provider value={{ posts, fetchPosts, addPost, clearCache }}>
+        <PostContext.Provider value={{ posts, fetchPosts, addPost, clearCache, refreshPosts }}>
         {children}
     </PostContext.Provider>
     );
